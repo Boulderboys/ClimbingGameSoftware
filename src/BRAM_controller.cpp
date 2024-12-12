@@ -73,13 +73,13 @@ void BRAM_write_reset(void){
     }
 }
 
-void BRAM_colour(uint8_t background){
+void BRAM_backgroundcolour(uint8_t background){
     colour_background = background;
 }
 
 void BRAM_square(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){
     if (!(x2 > SCREEN_WIDTH) && !(x1 > SCREEN_WIDTH) &&
-     !(y1 > SCREEN_HEIGHT) && !(y2 > SCREEN_HEIGHT)){ // beperkingen x en y as 
+     !(y1 > SCREEN_HEIGHT) && !(y2 > SCREEN_HEIGHT)){ // Limits x and y axis 
         xy_array[0][0] = x1;
         xy_array[0][1] = y1;
 
@@ -94,18 +94,3 @@ void BRAM_square(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){
         BRAM_write_reset(); 
     }
 }
-
-// void test(){
-//     bool work = true;
-//     uint16_t cnt = 0;
-//     while(work){
-
-//         bram_ptr[SCREEN_WIDTH * cnt + 160] = 0x0F;
-//         bram_ptr[SCREEN_WIDTH * cnt + 159] = 0xF0;
-//         cnt++;
-
-//         if (cnt >= SCREEN_HEIGHT){
-//             work = FALSE;
-//         }
-//     }
-// }

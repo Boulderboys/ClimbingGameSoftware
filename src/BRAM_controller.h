@@ -13,7 +13,7 @@
 
 void BRAM_write(void);
 
-void BRAM_colour(uint8_t background);
+void BRAM_backgroundcolour(uint8_t background);
 
 void BRAM_square(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
 
@@ -22,5 +22,3 @@ void BRAM_write_reset(void);
 void set_Hand_Closed(bool left, bool right);
 
 void set_Hand_Available(bool left, bool right);
-
-//void test();
