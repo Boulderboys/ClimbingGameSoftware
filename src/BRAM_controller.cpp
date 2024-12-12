@@ -12,14 +12,14 @@ uint8_t colour_hand_closed = 0x1C;
 volatile uint8_t *bram_ptr = (volatile uint8_t *)BRAM_BASE_ADDRESS;
 
 
-struct Hand_speler{
+struct HandSpeler{
     bool available;
     bool closed;
     uint16_t x;
     uint16_t y;
 };
 
-Hand_speler Hands[2] {{TRUE, FALSE, 0,0}, {TRUE, FALSE, 0, 0}};
+HandSpeler Hands[2] {{TRUE, FALSE, 0,0}, {TRUE, FALSE, 0, 0}};
 
 
 
