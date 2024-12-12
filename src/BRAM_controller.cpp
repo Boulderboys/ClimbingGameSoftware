@@ -11,12 +11,16 @@ uint8_t colour_hand_closed = 0x1C;
 // Pointer to BRAM
 volatile uint8_t *bram_ptr = (volatile uint8_t *)BRAM_BASE_ADDRESS;
 
-uint16_t xy_array[2][2];
 
+struct Hand_speler{
+    bool available;
+    bool closed;
+    uint16_t x;
+    uint16_t y;
+};
 
-bool Hand_Closed[2] = {FALSE, FALSE};
+Hand_speler Hands[2] {{TRUE, FALSE, 0,0}, {TRUE, FALSE, 0, 0}};
 
-bool Hand_Available[2] = {TRUE, TRUE};
 
 
 // internal methods
@@ -29,36 +33,36 @@ void BRAM_write(void)  {
 }
 
 void set_Hand_Closed(bool left, bool right){
-    Hand_Closed[0] = left;
-    Hand_Closed[1] = right;
+    Hands[0].closed = left;
+    Hands[1].closed = right;
 }
 
 void set_Hand_Available(bool left, bool right){
-    Hand_Available[0] = left;
-    Hand_Available[1] = right;
+    Hands[0].available = left;
+    Hands[1].available = right;
 }
 
 void BRAM_write_square(void) {
     uint8_t colour;
 
     for (int i = 0; i<2; i++) {
-        if (Hand_Available[i]) {
+        if (Hands[i].available) {
 
-            if (Hand_Closed[i]) {
+            if (Hands[i].closed) {
                 colour = colour_hand_closed;
             }else colour = colour_hand;
 
-            uint16_t x = xy_array[i][0];
-            uint16_t y = xy_array[i][1];
+            uint16_t x = Hands[i].x;
+            uint16_t y = Hands[i].y;
             bool work = TRUE;
         
             while (work){
                 bram_ptr[x + (y * SCREEN_WIDTH)] = colour;
                 x++;
-                if (x >= xy_array[i][0] + SQUARE_WIDTH || x >= SCREEN_WIDTH) {
-                    x = xy_array[i][0];
+                if (x >= Hands[i].x + SQUARE_WIDTH || x >= SCREEN_WIDTH) {
+                    x = Hands[i].x ;
                     y = y + 1;
-                    if (y >= xy_array[i][1] + SQUARE_WIDTH) {
+                    if (y >= Hands[i].y + SQUARE_WIDTH) {
                         work = FALSE;
                     }
                 }
@@ -80,11 +84,11 @@ void BRAM_backgroundcolour(uint8_t background){
 void BRAM_square(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){
     if (!(x2 > SCREEN_WIDTH) && !(x1 > SCREEN_WIDTH) &&
      !(y1 > SCREEN_HEIGHT) && !(y2 > SCREEN_HEIGHT)){ // Limits x and y axis 
-        xy_array[0][0] = x1;
-        xy_array[0][1] = y1;
+        Hands[0].x = x1;
+        Hands[0].y = y1;
 
-        xy_array[1][0] = x2;
-        xy_array[1][1] = y2;
+        Hands[1].x = x2;
+        Hands[1].y = y2;
 
         BRAM_write_reset();
         BRAM_write_square();

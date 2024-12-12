@@ -25,8 +25,6 @@ int main()
 
     BRAM_write();
 
-    uint32_t cnt =0;
-
     uint16_t x1 = 0;
     uint16_t y1 = 200;
     uint16_t x2 = 400;
@@ -39,10 +37,6 @@ int main()
 //    test();
 
     while (1) { 
-        cnt++;
-
-        if (cnt == 50000){
-            cnt = 0;
 
             x2--;
             y2++;
@@ -58,7 +52,6 @@ int main()
             if (y2 >= 300){
                 set_Hand_Closed(FALSE, TRUE);
             }
-        }
 
         uint32_t value = XGpio_DiscreteRead(&Gpio_switches, SWITCH_CHANNEL);
         XGpio_DiscreteWrite(&Gpio_led, LED_CHANNEL, value);
