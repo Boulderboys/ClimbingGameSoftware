@@ -19,6 +19,6 @@ void BRAM_square(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
 
 void BRAM_write_reset(void);
 
-void set_Hand_Closed(bool left, bool right);
+void set_hand_closed(bool left, bool right);
 
-void set_Hand_Available(bool left, bool right);
+void set_hand_available(bool left, bool right);

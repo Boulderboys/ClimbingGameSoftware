@@ -43,14 +43,14 @@ int main()
             BRAM_square(x1,y1,x2,y2);
 
             if (y1 == 100){
-                set_Hand_Available(FALSE, TRUE);
+                set_hand_available(FALSE, TRUE);
             }else {
                 x1++;
                 y1--;
             }
 
             if (y2 >= 300){
-                set_Hand_Closed(FALSE, TRUE);
+                set_hand_closed(FALSE, TRUE);
             }
 
         uint32_t value = XGpio_DiscreteRead(&Gpio_switches, SWITCH_CHANNEL);
