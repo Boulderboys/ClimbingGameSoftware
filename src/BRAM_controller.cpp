@@ -19,7 +19,7 @@ struct HandSpeler{
     uint16_t y;
 };
 
-HandSpeler Hands[2] {{TRUE, FALSE, 0,0}, {TRUE, FALSE, 0, 0}};
+HandSpeler hands[2] {{TRUE, FALSE, 0,0}, {TRUE, FALSE, 0, 0}};
 
 
 
@@ -32,37 +32,37 @@ void BRAM_write(void)  {
     BRAM_write_square();
 }
 
-void set_Hand_Closed(bool left, bool right){
-    Hands[0].closed = left;
-    Hands[1].closed = right;
+void set_hand_closed(bool left, bool right){
+    hands[0].closed = left;
+    hands[1].closed = right;
 }
 
-void set_Hand_Available(bool left, bool right){
-    Hands[0].available = left;
-    Hands[1].available = right;
+void set_hand_available(bool left, bool right){
+    hands[0].available = left;
+    hands[1].available = right;
 }
 
 void BRAM_write_square(void) {
     uint8_t colour;
 
     for (int i = 0; i<2; i++) {
-        if (Hands[i].available) {
+        if (hands[i].available) {
 
-            if (Hands[i].closed) {
+            if (hands[i].closed) {
                 colour = colour_hand_closed;
             }else colour = colour_hand;
 
-            uint16_t x = Hands[i].x;
-            uint16_t y = Hands[i].y;
+            uint16_t x = hands[i].x;
+            uint16_t y = hands[i].y;
             bool work = TRUE;
         
             while (work){
                 bram_ptr[x + (y * SCREEN_WIDTH)] = colour;
                 x++;
-                if (x >= Hands[i].x + SQUARE_WIDTH || x >= SCREEN_WIDTH) {
-                    x = Hands[i].x ;
+                if (x >= hands[i].x + SQUARE_WIDTH || x >= SCREEN_WIDTH) {
+                    x = hands[i].x ;
                     y = y + 1;
-                    if (y >= Hands[i].y + SQUARE_WIDTH) {
+                    if (y >= hands[i].y + SQUARE_WIDTH) {
                         work = FALSE;
                     }
                 }
@@ -84,11 +84,11 @@ void BRAM_backgroundcolour(uint8_t background){
 void BRAM_square(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){
     if (!(x2 > SCREEN_WIDTH) && !(x1 > SCREEN_WIDTH) &&
      !(y1 > SCREEN_HEIGHT) && !(y2 > SCREEN_HEIGHT)){ // Limits x and y axis 
-        Hands[0].x = x1;
-        Hands[0].y = y1;
+        hands[0].x = x1;
+        hands[0].y = y1;
 
-        Hands[1].x = x2;
-        Hands[1].y = y2;
+        hands[1].x = x2;
+        hands[1].y = y2;
 
         BRAM_write_reset();
         BRAM_write_square();
